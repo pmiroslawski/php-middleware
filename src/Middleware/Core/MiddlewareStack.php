@@ -4,6 +4,7 @@ namespace Bit9\Middleware\Core;
 
 use Bit9\Middleware\Letter\Envelope;
 use Bit9\Middleware\Stack\StackInterface;
+use Bit9\Middleware\MiddlewareInterface;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
@@ -44,7 +45,7 @@ class MiddlewareStack implements MiddlewareInterface, MiddlewareStackInterface
         return $next;
     }
 
-    public function handle(Envelope $envelope, MiddlewareStackInterface $stack): Envelope
+    public function handle(Envelope $envelope, ?MiddlewareStackInterface $stack = null): Envelope
     {
         return $envelope;
     }

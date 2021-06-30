@@ -2,7 +2,7 @@
 
 namespace Bit9\Middleware\Stack;
 
-use Bit9\Middleware\Core\MiddlewareInterface;
+use Bit9\Middleware\MiddlewareInterface;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>

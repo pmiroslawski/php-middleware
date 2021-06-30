@@ -2,6 +2,8 @@
 
 namespace Bit9\Middleware\Core;
 
+use Bit9\Middleware\MiddlewareInterface;
+
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */

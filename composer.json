@@ -1,5 +1,5 @@
 {
-	"name" : "PHP Middleware Implementation",
+	"name" : "pmiroslawski/php-middleware",
 	"description" : "Just Another PHP Middleware Implementation",
 	"type" : "library",
 	"homepage" : "https://github.com/pmiroslawski/php-middleware",

@@ -1,0 +1,23 @@
+{
+	"name" : "PHP Middleware Implementation",
+	"description" : "Just Another PHP Middleware Implementation",
+	"type" : "library",
+	"homepage" : "https://github.com/pmiroslawski/php-middleware",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Pawel Miroslawski",
+			"email" : "pmiroslawski@gmail.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Bit9\\" : "src/"
+		}
+	},
+	"require" : {
+		"php" : ">7.4"
+	},
+	"require-dev" : {
+		"symfony/var-dumper" : "^5.3"
+	}
+}

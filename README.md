@@ -1,8 +1,9 @@
 # Just Another PHP Middleware Stack Implementation 
 
 ## Installation
-
-...
+```
+    composer req pmiroslawski/php-middleware
+```
 
 
 ## Example of use

@@ -26,10 +26,12 @@ class Middleware implements MiddlewareInterface
         }
     }
 
-    public function setStopwatch(Stopwatch $stopwatch, string $eventCategory)
+    public function setStopwatch(Stopwatch $stopwatch, string $eventCategory) : MiddlewareInterface
     {
         $this->stopwatch = $stopwatch;
         $this->eventCategory = $eventCategory;
+
+        return $this;
     }
 
     /**

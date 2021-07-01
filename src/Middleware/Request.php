@@ -1,14 +1,14 @@
 <?php
 
-namespace Bit9\Middleware\Letter;
+namespace Bit9\Middleware;
 
 
-use Bit9\Middleware\Letter\Stamp\StampInterface;
+use Bit9\Middleware\Request\Stamp\StampInterface;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-final class Envelope
+final class Request
 {
     private \ArrayObject $stamps;
     private $message;
@@ -38,7 +38,7 @@ final class Envelope
     }
 
     /**
-     * @param object|Envelope  $message
+     * @param object|Request  $message
      * @param StampInterface[] $stamps
      */
     public static function wrap($message, array $stamps = []): self
@@ -49,7 +49,7 @@ final class Envelope
     }
 
     /**
-     * @return Envelope a new Envelope instance with additional stamp
+     * @return Request a new Envelope instance with additional stamp
      */
     public function with(StampInterface ...$stamps): self
     {
@@ -63,7 +63,7 @@ final class Envelope
     }
 
     /**
-     * @return Envelope a new Envelope instance without any stamps of the given class
+     * @return Request a new Envelope instance without any stamps of the given class
      */
     public function withoutAll(string $stampFqcn): self
     {

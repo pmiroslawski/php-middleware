@@ -1,18 +1,17 @@
 <?php
 
-namespace Bit9\Middleware\Core;
+namespace Bit9\Middleware;
 
-use Bit9\Middleware\Letter\Envelope;
+
 use Bit9\Middleware\Stack\StackInterface;
-use Bit9\Middleware\MiddlewareInterface;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-class MiddlewareStack implements MiddlewareInterface, MiddlewareStackInterface
+class StackMiddleware implements MiddlewareStackInterface, MiddlewareInterface
 {
     private StackInterface $stack;
-    private $offset = 0;
+    private int $offset = 0;
 
     /**
      * @param iterable|MiddlewareInterface[]|MiddlewareInterface|null $middlewareIterator
@@ -45,9 +44,9 @@ class MiddlewareStack implements MiddlewareInterface, MiddlewareStackInterface
         return $next;
     }
 
-    public function handle(Envelope $envelope, ?MiddlewareStackInterface $stack = null): Envelope
+    public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request
     {
-        return $envelope;
+        return $request;
     }
 }
 

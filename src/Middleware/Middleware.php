@@ -2,17 +2,14 @@
 
 namespace Bit9\Middleware;
 
-use Bit9\Middleware\Core\MiddlewareStack;
-use Bit9\Middleware\Letter\Envelope;
 use Bit9\Middleware\Stack\Stack;
-use Bit9\Middleware\Core\MiddlewareStackInterface;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-class Middleware implements MiddlewareInterface, DispatcherInterface
+class Middleware implements MiddlewareInterface
 {
-    private \IteratorAggregate $middlewareAggregate;
+    protected \IteratorAggregate $middlewareAggregate;
 
     public function __construct(iterable $middlewareHandlers = [])
     {
@@ -28,7 +25,7 @@ class Middleware implements MiddlewareInterface, DispatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function dispatch(Envelope $envelope): Envelope
+    protected function dispatch(Request $request): Request
     {
         $middlewareIterator = $this->middlewareAggregate->getIterator();
         while ($middlewareIterator instanceof \IteratorAggregate) {
@@ -38,27 +35,25 @@ class Middleware implements MiddlewareInterface, DispatcherInterface
         $middlewareIterator->rewind();
 
         if (!$middlewareIterator->valid()) {
-            return $envelope;
+            return $request;
         }
 
         $stack = new Stack();
 
-        $middlewareStack = new MiddlewareStack($stack, $middlewareIterator);
+        $middlewareStack = new StackMiddleware($stack, $middlewareIterator);
 
-        return $middlewareIterator->current()->handle($envelope, $middlewareStack);
+        return $middlewareIterator->current()->handle($request, $middlewareStack);
     }
 
-    public function handle(Envelope $envelope, ?MiddlewareStackInterface $stack = null): Envelope
+    public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request
     {
         if ($this->middlewareAggregate->count()) {
-            $envelope = $this->dispatch($envelope);
+            $request = $this->dispatch($request);
             if ($stack == null) {
-                return $envelope;
+                return $request;
             }
         }
 
-        dump(get_class($this));
-
-        return $stack->next()->handle($envelope, $stack);
+        return $stack->next()->handle($request, $stack);
     }
 }

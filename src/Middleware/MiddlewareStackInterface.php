@@ -1,6 +1,6 @@
 <?php
 
-namespace Bit9\Middleware\Core;
+namespace Bit9\Middleware;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>

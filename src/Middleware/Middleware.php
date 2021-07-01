@@ -48,9 +48,7 @@ class Middleware implements MiddlewareInterface
             return $request;
         }
 
-        $stack = new Stack();
-
-        $middlewareStack = new StackMiddleware($stack, $middlewareIterator);
+        $middlewareStack = new StackMiddleware(new Stack(), $middlewareIterator);
         if ($this->stopwatch) {
             $middlewareStack->setStopwatch($this->stopwatch, $this->eventCategory);
         }

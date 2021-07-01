@@ -62,25 +62,19 @@ class StackMiddleware implements MiddlewareStackInterface, MiddlewareInterface
 
     public function start($nextMiddleware): void
     {
-        if ($this->stopwatch === null) {
-            return;
+        $this->currentEvent = sprintf('"%s" in "%s"', get_debug_type($nextMiddleware), $this->eventCategory);
+        if ($this->stopwatch) {
+            $this->stopwatch->start($this->currentEvent, $this->eventCategory);
         }
-
-        $this->currentEvent = sprintf('"%s"', get_debug_type($nextMiddleware));
-
-        $this->stopwatch->start($this->currentEvent, $this->eventCategory);
     }
 
     public function stop(): void
     {
-        if ($this->stopwatch === null) {
-            return;
+        if ($this->stopwatch && null !== $this->currentEvent && $this->stopwatch->isStarted($this->currentEvent)) {
+            $this->stopwatch->stop($this->currentEvent);
         }
 
-        if (null !== $this->currentEvent && $this->stopwatch->isStarted($this->currentEvent)) {
-            $this->stopwatch->stop($this->currentEvent);
-            $this->currentEvent = null;
-        }
+        $this->currentEvent = null;
     }
 
     public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request

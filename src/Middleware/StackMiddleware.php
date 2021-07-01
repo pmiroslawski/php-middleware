@@ -60,7 +60,7 @@ class StackMiddleware implements MiddlewareStackInterface, MiddlewareInterface
         return $next;
     }
 
-    public function start($nextMiddleware): void
+    public function start(MiddlewareInterface $nextMiddleware): void
     {
         $this->currentEvent = sprintf('"%s" in "%s"', get_debug_type($nextMiddleware), $this->eventCategory);
         if ($this->stopwatch) {

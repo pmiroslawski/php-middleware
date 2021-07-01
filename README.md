@@ -8,4 +8,4 @@
 
 ## Example of use
 
-[https://github.com/pmiroslawski/php-middleware-example](hhttps://github.com/pmiroslawski/php-middleware-example)
+- [https://github.com/pmiroslawski/php-middleware-example](hhttps://github.com/pmiroslawski/php-middleware-example)

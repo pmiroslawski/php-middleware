@@ -19,5 +19,8 @@
 	},
 	"require-dev" : {
 		"symfony/var-dumper" : "^5.3"
+	},
+	"suggest": {
+		"symfony/stopwatch": "Provides a way to profile middlewares"
 	}
 }

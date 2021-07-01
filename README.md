@@ -5,7 +5,8 @@
     composer req pmiroslawski/php-middleware
 ```
 
+Optionally you can use [symfony/stopwatch](https://packagist.org/packages/symfony/stopwatch) to profile your middlewares.
 
 ## Example of use
 
-- [https://github.com/pmiroslawski/php-middleware-example](hhttps://github.com/pmiroslawski/php-middleware-example)
+Check this repository: [https://github.com/pmiroslawski/php-middleware-example](hhttps://github.com/pmiroslawski/php-middleware-example)

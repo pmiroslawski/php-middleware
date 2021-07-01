@@ -9,4 +9,4 @@ Optionally you can use [symfony/stopwatch](https://packagist.org/packages/symfon
 
 ## Example of use
 
-Check this repository: [pmiroslawski/php-middleware-example](hhttps://github.com/pmiroslawski/php-middleware-example)
+Check this repository: [pmiroslawski/php-middleware-example](https://github.com/pmiroslawski/php-middleware-example)

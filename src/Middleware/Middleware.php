@@ -3,6 +3,7 @@
 namespace Bit9\Middleware;
 
 use Bit9\Middleware\Stack\Stack;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
@@ -10,6 +11,9 @@ use Bit9\Middleware\Stack\Stack;
 class Middleware implements MiddlewareInterface
 {
     protected \IteratorAggregate $middlewareAggregate;
+
+    private ?Stopwatch $stopwatch = null;
+    private ?string $eventCategory;
 
     public function __construct(iterable $middlewareHandlers = [])
     {
@@ -20,6 +24,12 @@ class Middleware implements MiddlewareInterface
         if ($middlewareHandlers instanceof \IteratorAggregate) {
             $this->middlewareAggregate = $middlewareHandlers;
         }
+    }
+
+    public function setStopwatch(Stopwatch $stopwatch, string $eventCategory)
+    {
+        $this->stopwatch = $stopwatch;
+        $this->eventCategory = $eventCategory;
     }
 
     /**
@@ -41,8 +51,20 @@ class Middleware implements MiddlewareInterface
         $stack = new Stack();
 
         $middlewareStack = new StackMiddleware($stack, $middlewareIterator);
+        if ($this->stopwatch) {
+            $middlewareStack->setStopwatch($this->stopwatch, $this->eventCategory);
+        }
 
-        return $middlewareIterator->current()->handle($request, $middlewareStack);
+        try {
+            $middleware = $middlewareIterator->current();
+
+            $middlewareStack->start($middleware);
+
+            return $middleware->handle($request, $middlewareStack);
+        }
+        finally {
+            $middlewareStack->stop();
+        }
     }
 
     public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request

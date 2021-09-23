@@ -7,12 +7,14 @@ use Bit9\Middleware\Request\Stamp\StampInterface;
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-final class Request implements  RequestInterface
+class Request implements RequestInterface
 {
-    private \ArrayObject $stamps;
+    protected \ArrayObject $stamps;
     private $request;
 
     /**
+     * Create Request object
+     *
      * @param mixed            $request
      * @param StampInterface[] $stamps
      */
@@ -24,10 +26,10 @@ final class Request implements  RequestInterface
 
         foreach ($stamps as $stamp) {
             $index = \get_class($stamp);
-
             if (!$this->stamps->offsetExists($index)) {
                 $this->stamps->offsetSet($index, new \ArrayObject());
             }
+
             $this->stamps->offsetGet($index)->append($stamp);
         }
     }
@@ -44,7 +46,12 @@ final class Request implements  RequestInterface
     }
 
     /**
-     * @return Request a new Envelope instance with additional stamp
+     * Get a new (cloned) request object instance with additional stamps
+     *
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::with()
+     *
+     * @return Request
      */
     public function with(StampInterface ...$stamps): self
     {
@@ -58,7 +65,12 @@ final class Request implements  RequestInterface
     }
 
     /**
-     * @return Request a new Envelope instance without any stamps of the given class
+     * Request a new request instance without any stamps of the given type
+     *
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::withoutAll()
+     *
+     * @return Request
      */
     public function withoutAll(string $stampFqcn): self
     {
@@ -71,6 +83,11 @@ final class Request implements  RequestInterface
 
     /**
      * Removes all stamps that implement the given type.
+     *
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::withoutStampsOfType()
+     *
+     * @return Request
      */
     public function withoutStampsOfType(string $type): self
     {
@@ -86,6 +103,12 @@ final class Request implements  RequestInterface
         return $cloned;
     }
 
+    /**
+     * Get the last stamp for the specified FQCN
+     *
+     * @param string $stampFqcn
+     * @return StampInterface|NULL
+     */
     public function last(string $stampFqcn): ?StampInterface
     {
         return isset($this->stamps[$stampFqcn = $this->resolveAlias($stampFqcn)]) ? end($this->stamps[$stampFqcn]) : null;
@@ -104,7 +127,12 @@ final class Request implements  RequestInterface
     }
 
     /**
-     * @return mixed The original request contained in the envelope
+     * The original request data contained in the request object
+     *
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::getRequest()
+     *
+     * @return mixed
      */
     public function getRequest()
     {

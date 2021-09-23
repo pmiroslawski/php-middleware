@@ -7,7 +7,7 @@ use Bit9\Middleware\Request\Stamp\StampInterface;
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-class Request implements  RequestInterface
+class Request implements RequestInterface
 {
     private \ArrayObject $stamps;
     private $request;
@@ -52,6 +52,23 @@ class Request implements  RequestInterface
 
         foreach ($stamps as $stamp) {
             $cloned->stamps[\get_class($stamp)][] = $stamp;
+        }
+
+        return $cloned;
+    }
+
+    public function withSingle(StampInterface ...$stamps): self
+    {
+        $cloned = clone $this;
+
+        foreach ($stamps as $stamp) {
+            $index = \get_class($stamp);
+
+            if (!$cloned->stamps->offsetExists($index)) {
+                $cloned->stamps->offsetSet($index, new \ArrayObject());
+            }
+
+            $cloned->stamps->offsetGet($index)->append($stamp);
         }
 
         return $cloned;

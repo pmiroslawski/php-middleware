@@ -13,7 +13,7 @@ final class Request implements  RequestInterface
     private $request;
 
     /**
-     * @param mixed           $message
+     * @param mixed            $request
      * @param StampInterface[] $stamps
      */
     public function __construct($request, array $stamps = [])
@@ -33,7 +33,7 @@ final class Request implements  RequestInterface
     }
 
     /**
-     * @param object|Request  $request
+     * @param mixed            $request
      * @param StampInterface[] $stamps
      */
     public static function wrap($request, array $stamps = []): self

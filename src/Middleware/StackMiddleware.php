@@ -2,7 +2,6 @@
 
 namespace Bit9\Middleware;
 
-
 use Bit9\Middleware\Stack\StackInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -77,7 +76,7 @@ class StackMiddleware implements MiddlewareStackInterface, MiddlewareInterface
         $this->currentEvent = null;
     }
 
-    public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request
+    public function handle(RequestInterface $request, ?MiddlewareStackInterface $stack = null): RequestInterface
     {
         return $request;
     }

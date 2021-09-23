@@ -37,7 +37,7 @@ class Middleware implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    protected function dispatch(Request $request): Request
+    protected function dispatch(RequestInterface $request): RequestInterface
     {
         $middlewareIterator = $this->middlewareAggregate->getIterator();
         while ($middlewareIterator instanceof \IteratorAggregate) {
@@ -67,7 +67,7 @@ class Middleware implements MiddlewareInterface
         }
     }
 
-    public function handle(Request $request, ?MiddlewareStackInterface $stack = null): Request
+    public function handle(RequestInterface $request, ?MiddlewareStackInterface $stack = null): RequestInterface
     {
         if ($this->middlewareAggregate->count()) {
             $request = $this->dispatch($request);

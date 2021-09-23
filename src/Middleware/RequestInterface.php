@@ -41,7 +41,15 @@ interface RequestInterface
     public function withoutStampsOfType(string $type): self;
 
     /**
-     * Get all stamps
+     * Get last stamp for the specified FQCN, or all stamps by their class name
+     *
+     * @param string $stampFqcn
+     * @return ?StampInterface
+     */
+    public function last(string $stampFqcn): ?StampInterface;
+
+    /**
+     * Get all stamps for the specified FQCN, or all stamps by their class name
      *
      * @param string $stampFqcn
      * @return \ArrayObject

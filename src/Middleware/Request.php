@@ -104,10 +104,8 @@ class Request implements RequestInterface
     }
 
     /**
-     * Get the last stamp for the specified FQCN
-     *
-     * @param string $stampFqcn
-     * @return StampInterface|NULL
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::last()
      */
     public function last(string $stampFqcn): ?StampInterface
     {
@@ -115,7 +113,8 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return StampInterface[]|StampInterface[][] The stamps for the specified FQCN, or all stamps by their class name
+     * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::all()
      */
     public function all(string $stampFqcn = null): \ArrayObject
     {

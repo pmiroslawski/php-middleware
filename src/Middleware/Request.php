@@ -7,7 +7,7 @@ use Bit9\Middleware\Request\Stamp\StampInterface;
 /**
  * @author Pawel Miroslawski <pmiroslawski@gmail.com>
  */
-final class Request implements  RequestInterface
+class Request implements  RequestInterface
 {
     private \ArrayObject $stamps;
     private $request;

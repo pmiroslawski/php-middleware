@@ -26,6 +26,7 @@ class Request implements RequestInterface
 
         foreach ($stamps as $stamp) {
             $index = \get_class($stamp);
+
             if (!$this->stamps->offsetExists($index)) {
                 $this->stamps->offsetSet($index, new \ArrayObject());
             }
@@ -58,7 +59,13 @@ class Request implements RequestInterface
         $cloned = clone $this;
 
         foreach ($stamps as $stamp) {
-            $cloned->stamps[\get_class($stamp)][] = $stamp;
+            $index = \get_class($stamp);
+
+            if (!$this->stamps->offsetExists($index)) {
+                $this->stamps->offsetSet($index, new \ArrayObject());
+            }
+
+            $this->stamps->offsetGet($index)->append($stamp);
         }
 
         return $cloned;
@@ -105,11 +112,28 @@ class Request implements RequestInterface
 
     /**
      * {@inheritDoc}
+     * @see \Bit9\Middleware\RequestInterface::exists()
+     */
+    public function exists(string $stampFqcn): bool
+    {
+        return $this->stamps->offsetExists($this->resolveAlias($stampFqcn));
+    }
+
+    /**
+     * {@inheritDoc}
      * @see \Bit9\Middleware\RequestInterface::last()
      */
     public function last(string $stampFqcn): ?StampInterface
     {
-        return isset($this->stamps[$stampFqcn = $this->resolveAlias($stampFqcn)]) ? end($this->stamps[$stampFqcn]) : null;
+        $stampFqcn = $this->resolveAlias($stampFqcn);
+
+        if (!$this->stamps->offsetExists($stampFqcn)) {
+            return null;
+        }
+
+        $stamps = $this->stamps->offsetGet($stampFqcn);
+
+        return $stamps->offsetGet(count($stamps) - 1);
     }
 
     /**
@@ -119,7 +143,7 @@ class Request implements RequestInterface
     public function all(string $stampFqcn = null): \ArrayObject
     {
         if (null !== $stampFqcn) {
-            return $this->stamps[$this->resolveAlias($stampFqcn)] ?? new \ArrayObject();
+            return $this->stamps->offsetGet($this->resolveAlias($stampFqcn));
         }
 
         return $this->stamps;

@@ -41,6 +41,14 @@ interface RequestInterface
     public function withoutStampsOfType(string $type): self;
 
     /**
+     * Check if given stamp for the specified FQCN has been set
+     *
+     * @param string $stampFqcn
+     * @return boolean
+     */
+    public function exists(string $stampFqcn): bool;
+
+    /**
      * Get last stamp for the specified FQCN, or all stamps by their class name
      *
      * @param string $stampFqcn
